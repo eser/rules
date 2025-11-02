@@ -2,18 +2,32 @@
 
 ## Usage
 
-When user states a preference, practice, or approach (coding, UI, security,
-tooling, methodology):
-
+When user states preference/practice/approach:
 1. Check `/docs/eser-rules/**/*.md`
-2. If new: categorize, ask scope if multi-domain applicable, add rule
+2. If new: categorize by scope and impact level, ask multi-domain applicability
 3. If conflicts: ask how to update
 
 Before working: review and apply all rules in `/docs/eser-rules/**/*.md`
 
+## Organization
+
+Structure by scope and impact:
+
+```
+architecture/     High-level system design (modules, structure, ADRs, testing)
+design/           Design principles (pure functions, immutability, composition)
+practices/        Coding practices (mindset, validation, error handling)
+javascript/       JS/TS language specifics (syntax, types, modules, runtime)
+tooling/          Tools and workflows (Deno, package managers)
+ui/               Frontend/UI guidelines
+security/         Security practices
+```
+
+Consolidate minor rules into broader files. Avoid single-rule files.
+
 ## Format
 
-Plain text, no markdown formatting (no bold, italic, etc). Structure:
+Plain text, no markdown formatting. Structure:
 
 ```
 # CategoryName
@@ -30,5 +44,4 @@ Incorrect:
 example
 ```
 
-Categories: Coding, UI, Security, Tooling, Testing, Architecture, etc. No
-redundant category paths in rule body. Write for token efficiency.
+Write for token efficiency.
