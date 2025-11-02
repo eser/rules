@@ -69,3 +69,26 @@ export async function analyzeComponents(srcDir: string): Promise<Component[]> {
   // ...
 }
 ```
+
+---
+
+## Global Object
+
+Scope: JS/TS (Browser, Deno, Node, Bun) Rule: Use globalThis instead of window.
+Works across all runtimes.
+
+Correct:
+
+```typescript
+const isDefined = typeof globalThis.localStorage !== "undefined";
+const location = globalThis.location?.href;
+globalThis.myGlobal = { value: 1 };
+```
+
+Incorrect:
+
+```typescript
+const isDefined = typeof window.localStorage !== "undefined"; // fails in Node/Deno
+const location = window.location.href; // fails in Node/Deno
+window.myGlobal = { value: 1 }; // fails in Node/Deno
+```
