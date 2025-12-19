@@ -1,39 +1,26 @@
 ---
 name: eser-rules-manager
-description: Manages development practice rules. Use when user states a preference, practice, or approach to add as a rule. Also use when user asks to add, modify, or categorize coding rules.
+description: Manages development practice rules. Use when user states a preference, practice, or approach to add as a rule. Also use when user asks to add, modify, or categorize rules covering coding, architecture, tooling, or best practices.
 ---
 
 # eser-rules: Development Practices Manager
 
-## Usage
+Manages development rules across skills. Before working, apply all rules in `.claude/skills/*/SKILL.md`.
 
-When user states preference/practice/approach:
-1. Check existing skills in `.claude/skills/`
-2. If new: categorize by scope and impact level, ask multi-domain applicability
-3. If conflicts: ask how to update
+## Quick Start
 
-Before working: review and apply all rules in `.claude/skills/*/SKILL.md`
+1. Identify scope → choose skill (or create new)
+2. Add/update rule in `.claude/skills/<name>/references/rules.md`
+3. Update `.claude/skills/<name>/SKILL.md` key principles if needed
+4. Validate: `npx -y claude-skills-cli validate .claude/skills/<name>`
 
-## Organization
+## Skill Format
 
-Structure by scope and impact:
+- **SKILL.md**: <50 lines, Quick Start + Key Principles + References
+- **references/**: Detailed rules with Correct/Incorrect examples
+- **Frontmatter**: `name` (kebab-case), `description` (<1024 chars)
 
-```
-.claude/skills/
-├── architecture-guidelines/   High-level system design (modules, structure, ADRs, testing)
-├── design-principles/         Design principles (pure functions, immutability, composition)
-├── coding-practices/          Coding practices (mindset, validation, error handling)
-├── javascript-practices/      JS/TS language specifics (syntax, types, modules, runtime)
-├── tooling-standards/         Tools and workflows (Deno, package managers)
-├── ui/                        Frontend/UI guidelines (create when needed)
-└── security/                  Security practices (create when needed)
-```
-
-Consolidate minor rules into broader sections. Avoid single-rule sections.
-
-## Format
-
-Plain text, no markdown formatting inside rules. Structure:
+## Rule Format (in references/)
 
 ```
 ## Section Name
@@ -48,11 +35,10 @@ Incorrect:
 example
 ```
 
-Write for token efficiency.
+## Skills by Scope
 
-## Adding New Rules
+`architecture-guidelines`, `design-principles`, `coding-practices`, `javascript-practices`, `tooling-standards`
 
-1. Identify the appropriate skill based on scope
-2. Add rule to existing section or create new section if needed
-3. Follow the format: Scope, Rule, Correct/Incorrect examples
-4. Keep rules concise and actionable
+## References
+
+See [skill-format.md](references/skill-format.md) for complete skill format requirements.
