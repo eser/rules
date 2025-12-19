@@ -1,4 +1,9 @@
-# Code Design
+---
+name: design-principles
+description: Code design patterns including pure functions, immutability, composition, single responsibility, and async patterns. Use when designing code structure, writing functions, or discussing design patterns.
+---
+
+# Code Design Principles
 
 ## Pure Functions
 
@@ -74,14 +79,11 @@ Incorrect:
 function processUser(email: string, data: UserData): void {
   // validates email
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
-
   // saves to database
   database.save(data);
-
   // sends email
   const message = "Welcome!";
   sendEmail(email, message);
-
   // logs activity
   console.log("User processed");
 }
@@ -210,7 +212,7 @@ const url = "/api/users/" + userId + "/posts/" + postId;
 ## Loop Control Flow
 
 Scope: All languages
-Rule: Use plain for loops when break/continue needed. break/continue only work in for/while loops.
+Rule: Use plain for loops when break/continue needed.
 
 Correct:
 ```typescript
@@ -218,10 +220,6 @@ for (const item of items) {
   if (item.skip) continue;
   if (item.error) break;
   process(item);
-}
-
-for (let i = 0; i < items.length; i++) {
-  if (shouldStop(items[i])) break;
 }
 ```
 
@@ -265,7 +263,7 @@ export function setConfig(config: Config) {
 ## Class Design
 
 Scope: All languages
-Rule: Separate data and methods. Consider plain objects instead of anemic classes. Use functions instead of classes where applicable. Use classes only for stateful services.
+Rule: Separate data and methods. Use plain objects for data, classes only for stateful services.
 
 Plain objects (records):
 ```typescript
@@ -285,10 +283,6 @@ Functions for behavior:
 function validateUser(user: User): boolean {
   return user.email.includes("@");
 }
-
-function formatUserName(user: User): string {
-  return user.name.toUpperCase();
-}
 ```
 
 Classes for stateful services:
@@ -305,24 +299,12 @@ class UserRepository {
 }
 ```
 
-Avoid anemic classes:
-```typescript
-// Incorrect - just a data holder, use plain object instead
-class User {
-  constructor(
-    public id: string,
-    public name: string,
-    public email: string
-  ) {}
-}
-```
-
 ---
 
 ## Side Effects
 
 Scope: All languages
-Rule: Avoid side effects in non-pure functions. Store state closest to where used. Makes code modular and easier to understand.
+Rule: Avoid side effects in non-pure functions. Store state closest to where used.
 
 Correct:
 ```typescript

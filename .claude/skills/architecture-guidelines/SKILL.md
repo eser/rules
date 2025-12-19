@@ -1,4 +1,9 @@
-# Architecture Principles
+---
+name: architecture-guidelines
+description: High-level system architecture including module systems, project structure, architectural decision records (ADRs), and testing strategies. Use when designing systems, reviewing structure, or discussing architecture.
+---
+
+# Architecture Guidelines
 
 ## Module System
 
