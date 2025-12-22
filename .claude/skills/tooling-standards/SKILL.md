@@ -21,6 +21,7 @@ deno test       # run tests
 **Deno:** Use `deno install/fmt/lint/test` instead of npm commands
 
 **Config files:**
+
 - `package.json` for dependencies and scripts
 - `tsconfig.json` for TypeScript
 - `deno.json` only for fmt/lint settings

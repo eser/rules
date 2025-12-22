@@ -3,9 +3,12 @@
 ## Pure Functions
 
 Scope: All languages
-Rule: Prefer pure (stateless) functions over stateful ones. Easier to reason about, test, and reuse.
+
+Rule: Prefer pure (stateless) functions over stateful ones.
+Easier to reason about, test, and reuse.
 
 Correct:
+
 ```typescript
 function calculateTotal(items: Item[]): number {
   return items.reduce((sum, item) => sum + item.price, 0);
@@ -17,9 +20,10 @@ function formatDate(date: Date): string {
 ```
 
 Incorrect:
+
 ```typescript
 let total = 0;
-function addToTotal(item: Item) {  // modifies external state
+function addToTotal(item: Item) { // modifies external state
   total += item.price;
 }
 ```
@@ -29,25 +33,29 @@ function addToTotal(item: Item) {  // modifies external state
 ## Immutability
 
 Scope: All languages
-Rule: Prefer immutable data structures. Prevents unintended side effects.
+
+Rule: Prefer immutable data structures. Prevents unintended
+side effects.
 
 Correct:
+
 ```typescript
 const user = { name: "John", age: 30 };
-const updatedUser = { ...user, age: 31 };  // new object
+const updatedUser = { ...user, age: 31 }; // new object
 
 const items = [1, 2, 3];
-const newItems = [...items, 4];  // new array
-const filtered = items.filter(x => x > 1);  // new array
+const newItems = [...items, 4]; // new array
+const filtered = items.filter((x) => x > 1); // new array
 ```
 
 Incorrect:
+
 ```typescript
 const user = { name: "John", age: 30 };
-user.age = 31;  // mutation
+user.age = 31; // mutation
 
 const items = [1, 2, 3];
-items.push(4);  // mutation
+items.push(4); // mutation
 ```
 
 ---
@@ -55,9 +63,12 @@ items.push(4);  // mutation
 ## Single Responsibility
 
 Scope: All languages
-Rule: Keep functions short and focused on single task. Easier to understand, test, and reuse.
+
+Rule: Keep functions short and focused on single task.
+Easier to understand, test, and reuse.
 
 Correct:
+
 ```typescript
 function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -70,6 +81,7 @@ function sendWelcomeEmail(email: string): void {
 ```
 
 Incorrect:
+
 ```typescript
 function processUser(email: string, data: UserData): void {
   // validates email
@@ -89,9 +101,12 @@ function processUser(email: string, data: UserData): void {
 ## Early Returns
 
 Scope: All languages
-Rule: Use early returns. Reduces nesting and improves readability.
+
+Rule: Use early returns. Reduces nesting and improves
+readability.
 
 Correct:
+
 ```typescript
 function processPayment(amount: number, balance: number): boolean {
   if (amount <= 0) return false;
@@ -104,6 +119,7 @@ function processPayment(amount: number, balance: number): boolean {
 ```
 
 Incorrect:
+
 ```typescript
 function processPayment(amount: number, balance: number): boolean {
   if (amount > 0) {
@@ -123,9 +139,12 @@ function processPayment(amount: number, balance: number): boolean {
 ## Composition Over Inheritance
 
 Scope: All languages
-Rule: Prefer composition over inheritance. More flexible and decoupled.
+
+Rule: Prefer composition over inheritance. More flexible
+and decoupled.
 
 Correct:
+
 ```typescript
 interface Logger {
   log(message: string): void;
@@ -141,12 +160,13 @@ class UserService {
 ```
 
 Incorrect:
+
 ```typescript
 class BaseService {
-  log(message: string) { }
+  log(message: string) {}
 }
 
-class UserService extends BaseService {  // tight coupling
+class UserService extends BaseService { // tight coupling
   createUser(data: UserData) {
     this.log("Creating user");
   }
@@ -158,9 +178,12 @@ class UserService extends BaseService {  // tight coupling
 ## Async Patterns
 
 Scope: JS/TS
-Rule: Prefer promises over callbacks. Cleaner and more maintainable.
+
+Rule: Prefer promises over callbacks. Cleaner and more
+maintainable.
 
 Correct:
+
 ```typescript
 async function fetchUser(id: string): Promise<User> {
   const response = await fetch(`/api/users/${id}`);
@@ -168,14 +191,15 @@ async function fetchUser(id: string): Promise<User> {
 }
 
 function loadData(): Promise<Data> {
-  return fetch("/api/data").then(r => r.json());
+  return fetch("/api/data").then((r) => r.json());
 }
 ```
 
 Incorrect:
+
 ```typescript
 function fetchUser(id: string, callback: (user: User) => void) {
-  fetch(`/api/users/${id}`).then(r => r.json()).then(callback);
+  fetch(`/api/users/${id}`).then((r) => r.json()).then(callback);
 }
 ```
 
@@ -184,9 +208,12 @@ function fetchUser(id: string, callback: (user: User) => void) {
 ## String Formatting
 
 Scope: JS/TS
-Rule: Prefer template strings over concatenation. More readable, allows embedded expressions.
+
+Rule: Prefer template strings over concatenation. More readable,
+allows embedded expressions.
 
 Correct:
+
 ```typescript
 const greeting = `Hello, ${user.name}!`;
 const url = `/api/users/${userId}/posts/${postId}`;
@@ -197,6 +224,7 @@ const multiline = `
 ```
 
 Incorrect:
+
 ```typescript
 const greeting = "Hello, " + user.name + "!";
 const url = "/api/users/" + userId + "/posts/" + postId;
@@ -207,9 +235,11 @@ const url = "/api/users/" + userId + "/posts/" + postId;
 ## Loop Control Flow
 
 Scope: All languages
+
 Rule: Use plain for loops when break/continue needed.
 
 Correct:
+
 ```typescript
 for (const item of items) {
   if (item.skip) continue;
@@ -219,10 +249,11 @@ for (const item of items) {
 ```
 
 Use array methods when no break/continue needed:
+
 ```typescript
 const processed = items
-  .filter(item => !item.skip)
-  .map(item => process(item));
+  .filter((item) => !item.skip)
+  .map((item) => process(item));
 ```
 
 ---
@@ -230,9 +261,12 @@ const processed = items
 ## Global Variables
 
 Scope: All languages
-Rule: Avoid global variables. Lead to unintended side effects.
+
+Rule: Avoid global variables. Lead to unintended side
+effects.
 
 Correct:
+
 ```typescript
 export function createConfig(env: string) {
   return { apiUrl: env === "prod" ? "api.prod" : "api.dev" };
@@ -244,9 +278,10 @@ class AppState {
 ```
 
 Incorrect:
+
 ```typescript
-let globalConfig = { };  // global mutable state
-let currentUser = null;  // global mutable state
+let globalConfig = {}; // global mutable state
+let currentUser = null; // global mutable state
 
 export function setConfig(config: Config) {
   globalConfig = config;
@@ -258,9 +293,12 @@ export function setConfig(config: Config) {
 ## Class Design
 
 Scope: All languages
-Rule: Separate data and methods. Use plain objects for data, classes only for stateful services.
+
+Rule: Separate data and methods. Use plain objects for
+data, classes only for stateful services.
 
 Plain objects (records):
+
 ```typescript
 interface User {
   id: string;
@@ -274,6 +312,7 @@ function createUser(name: string, email: string): User {
 ```
 
 Functions for behavior:
+
 ```typescript
 function validateUser(user: User): boolean {
   return user.email.includes("@");
@@ -281,6 +320,7 @@ function validateUser(user: User): boolean {
 ```
 
 Classes for stateful services:
+
 ```typescript
 class UserRepository {
   private cache = new Map<string, User>();
@@ -299,9 +339,12 @@ class UserRepository {
 ## Side Effects
 
 Scope: All languages
-Rule: Avoid side effects in non-pure functions. Store state closest to where used.
+
+Rule: Avoid side effects in non-pure functions. Store state
+closest to where used.
 
 Correct:
+
 ```typescript
 function calculateDiscount(price: number, discountRate: number): number {
   return price * (1 - discountRate);
@@ -315,11 +358,12 @@ function processOrder(order: Order) {
 ```
 
 Incorrect:
+
 ```typescript
-let appliedDiscount = 0;  // external state
+let appliedDiscount = 0; // external state
 
 function calculateDiscount(price: number, rate: number): number {
-  appliedDiscount = price * rate;  // side effect
+  appliedDiscount = price * rate; // side effect
   return price * (1 - rate);
 }
 ```
@@ -329,9 +373,12 @@ function calculateDiscount(price: number, rate: number): number {
 ## Getters/Setters
 
 Scope: All languages
-Rule: Avoid getter/setters. Can lead to unexpected side effects.
+
+Rule: Avoid getter/setters. Can lead to unexpected side
+effects.
 
 Correct:
+
 ```typescript
 interface User {
   readonly name: string;
@@ -344,17 +391,18 @@ function updateUserEmail(user: User, email: string): User {
 ```
 
 Incorrect:
+
 ```typescript
 class User {
   private _email: string;
 
   get email(): string {
-    this.logAccess();  // unexpected side effect
+    this.logAccess(); // unexpected side effect
     return this._email;
   }
 
   set email(value: string) {
-    this.validateEmail(value);  // side effect
+    this.validateEmail(value); // side effect
     this._email = value;
   }
 }

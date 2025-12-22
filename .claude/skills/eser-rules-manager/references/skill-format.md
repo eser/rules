@@ -30,8 +30,8 @@ description: What it does and when to use it
 - Max 64 characters
 - Must be unique across all skills
 
-Correct: `javascript-practices`, `eser-rules-manager`
-Incorrect: `JavaScript_Practices`, `my skill`
+Correct: `javascript-practices`, `eser-rules-manager` Incorrect:
+`JavaScript_Practices`, `my skill`
 
 ### description Field
 
@@ -40,13 +40,15 @@ Incorrect: `JavaScript_Practices`, `my skill`
 - Include trigger keywords for discovery
 
 Correct:
+
 ```yaml
 description: JavaScript and TypeScript conventions for syntax, modules, types, and runtime behavior. Use when writing or reviewing JS/TS code, implementing modules, handling types, or working with runtime APIs.
 ```
 
 Incorrect:
+
 ```yaml
-description: JavaScript stuff  # Too vague, no trigger context
+description: JavaScript stuff # Too vague, no trigger context
 ```
 
 ---
@@ -96,16 +98,19 @@ See [rules.md](references/rules.md) for complete guidelines.
 Skills use 3-level loading for token efficiency:
 
 **Level 1 - SKILL.md (Always Loaded)**
+
 - Quick overview and key principles
 - Kept under 50 lines
 - Loaded when skill is discovered
 
 **Level 2 - references/ (Loaded on Demand)**
+
 - Detailed rules with Correct/Incorrect examples
 - Read only when Claude needs specifics
 - Can be extensive (100+ lines)
 
 **Level 3 - Supporting Files (Loaded on Demand)**
+
 - Scripts, templates, configs
 - Located in scripts/, templates/
 - Read only when explicitly needed
@@ -132,23 +137,27 @@ See [rules.md](references/rules.md) for complete guidelines.
 
 ### Rule Format in references/
 
-```markdown
+````markdown
 ## Section Name
 
 Scope: applicable context
+
 Rule: concise statement
 
 Correct:
+
 ```code
 example
 ```
+````
 
 Incorrect:
+
 ```code
 example
 ```
-```
 
+````
 Use `---` to separate major sections.
 
 ---
@@ -159,31 +168,30 @@ Always validate after creating or modifying a skill:
 
 ```bash
 npx -y claude-skills-cli validate .claude/skills/<skill-name>
-```
+````
 
 ### Validation Checks
 
-| Check | Requirement |
-|-------|-------------|
-| YAML Syntax | Valid YAML, no tabs |
-| name | kebab-case, max 64 chars |
-| description | Under 1024 chars |
-| SKILL.md body | Under 50 lines |
-| File location | Correct path structure |
+| Check         | Requirement              |
+| ------------- | ------------------------ |
+| YAML Syntax   | Valid YAML, no tabs      |
+| name          | kebab-case, max 64 chars |
+| description   | Under 1024 chars         |
+| SKILL.md body | Under 50 lines           |
+| File location | Correct path structure   |
 
 ### Common Errors
 
-**"SKILL.md body is X lines (MAX: 50)"**
-→ Move detailed content to references/
+**"SKILL.md body is X lines (MAX: 50)"** → Move detailed content to references/
 
-**"Description is X characters (recommended: <200)"**
-→ Shorten description, move details to SKILL.md body
+**"Description is X characters (recommended: <200)"** → Shorten description,
+move details to SKILL.md body
 
-**"Missing Quick Start section"**
-→ Add `## Quick Start` with minimal usage steps
+**"Missing Quick Start section"** → Add `## Quick Start` with minimal usage
+steps
 
-**"No references/ links found but SKILL.md is large"**
-→ Split content into references/ files
+**"No references/ links found but SKILL.md is large"** → Split content into
+references/ files
 
 ---
 
@@ -208,13 +216,13 @@ npx -y claude-skills-cli validate .claude/skills/<skill-name>
 
 ## Skills in This Project
 
-| Skill | Scope |
-|-------|-------|
-| `architecture-guidelines` | System design, ADRs, testing |
-| `design-principles` | Pure functions, immutability, composition |
-| `coding-practices` | Error handling, validation, DRY |
-| `javascript-practices` | JS/TS syntax, modules, types, runtime |
-| `tooling-standards` | Deno, JSR registry, config files |
-| `eser-rules-manager` | Managing all skills above |
+| Skill                     | Scope                                     |
+| ------------------------- | ----------------------------------------- |
+| `architecture-guidelines` | System design, ADRs, testing              |
+| `design-principles`       | Pure functions, immutability, composition |
+| `coding-practices`        | Error handling, validation, DRY           |
+| `javascript-practices`    | JS/TS syntax, modules, types, runtime     |
+| `tooling-standards`       | Deno, JSR registry, config files          |
+| `eser-rules-manager`      | Managing all skills above                 |
 
 Create new skills for: `ui/`, `security/` when needed.

@@ -1,6 +1,6 @@
 ---
 name: design-principles
-description: Code design patterns including pure functions, immutability, composition, single responsibility, and async patterns. Use when designing code structure, writing functions, or discussing design patterns.
+description: Code design patterns: pure functions, immutability, composition, and async. Use when designing code or functions.
 ---
 
 # Code Design Principles
@@ -12,7 +12,7 @@ Patterns for writing clean, maintainable, and testable code.
 ```typescript
 // Pure function with immutability
 function updateUser(user: User, age: number): User {
-  return { ...user, age };  // new object, no mutation
+  return { ...user, age }; // new object, no mutation
 }
 ```
 

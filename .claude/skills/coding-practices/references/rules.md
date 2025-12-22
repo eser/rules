@@ -3,9 +3,12 @@
 ## Self-Documenting Code
 
 Scope: All languages
-Rule: Use meaningful variable, class, and function names. Makes code easier to understand and maintain.
+
+Rule: Use meaningful variable, class, and function names. Makes code easier to
+understand and maintain.
 
 Correct:
+
 ```typescript
 function calculateTotalPrice(items: Item[], taxRate: number): number {
   const subtotal = items.reduce((sum, item) => sum + item.price, 0);
@@ -14,20 +17,24 @@ function calculateTotalPrice(items: Item[], taxRate: number): number {
 }
 
 class UserAuthenticationService {
-  async validateCredentials(username: string, password: string): Promise<boolean> { }
+  async validateCredentials(
+    username: string,
+    password: string,
+  ): Promise<boolean> {}
 }
 ```
 
 Incorrect:
+
 ```typescript
 function calc(arr: Item[], r: number): number {
-  const s = arr.reduce((a, b) => a + b.price, 0);  // what is s?
-  const t = s * r;  // what is t?
+  const s = arr.reduce((a, b) => a + b.price, 0); // what is s?
+  const t = s * r; // what is t?
   return s + t;
 }
 
-class UAS {  // unclear abbreviation
-  async validate(u: string, p: string): Promise<boolean> { }  // u? p?
+class UAS { // unclear abbreviation
+  async validate(u: string, p: string): Promise<boolean> {} // u? p?
 }
 ```
 
@@ -36,9 +43,11 @@ class UAS {  // unclear abbreviation
 ## Comments
 
 Scope: All languages
+
 Rule: Use comments to explain 'why' and 'how' if code is not self-explanatory.
 
 Correct:
+
 ```typescript
 // Use binary search because dataset can be very large (10M+ items)
 // Linear search would be O(n), binary search is O(log n)
@@ -52,15 +61,17 @@ const cache = new Map<string, CachedValue>();
 ```
 
 Incorrect:
+
 ```typescript
 // This function finds a user
-function findUser(users: User[], id: string): User | null {  // redundant comment
+function findUser(users: User[], id: string): User | null { // redundant comment
 }
 
-const x = 5 * 60 * 1000;  // no explanation of why this specific value
+const x = 5 * 60 * 1000; // no explanation of why this specific value
 ```
 
 Good practices:
+
 - Explain why, not what (code shows what)
 - Document trade-offs and decisions
 - Explain non-obvious algorithms or optimizations
@@ -71,9 +82,11 @@ Good practices:
 ## Don't Repeat Yourself
 
 Scope: All languages
+
 Rule: Abstract common functionality into reusable modules or functions.
 
 Correct:
+
 ```typescript
 function formatUserName(user: User): string {
   return `${user.firstName} ${user.lastName}`;
@@ -89,17 +102,19 @@ function sendEmail(user: User) {
 ```
 
 Incorrect:
+
 ```typescript
 function displayWelcome(user: User) {
-  console.log(`Welcome, ${user.firstName} ${user.lastName}`);  // duplicated
+  console.log(`Welcome, ${user.firstName} ${user.lastName}`); // duplicated
 }
 
 function sendEmail(user: User) {
-  email.send(`Hello ${user.firstName} ${user.lastName}`);  // duplicated
+  email.send(`Hello ${user.firstName} ${user.lastName}`); // duplicated
 }
 ```
 
 When to abstract:
+
 - Used 3+ times: definitely abstract
 - Used 2 times: consider abstracting if logic is complex
 - Used 1 time: keep inline unless it improves clarity
@@ -109,9 +124,12 @@ When to abstract:
 ## Input Validation
 
 Scope: All languages
-Rule: Validate input data. Ensures robustness and prevents bugs or security vulnerabilities.
+
+Rule: Validate input data. Ensures robustness and prevents bugs or security
+vulnerabilities.
 
 Correct:
+
 ```typescript
 function createUser(email: string, age: number): User {
   if (!email.includes("@")) throw new Error("Invalid email");
@@ -121,9 +139,10 @@ function createUser(email: string, age: number): User {
 ```
 
 Incorrect:
+
 ```typescript
 function createUser(email: string, age: number): User {
-  return { email, age };  // no validation
+  return { email, age }; // no validation
 }
 ```
 
@@ -132,9 +151,12 @@ function createUser(email: string, age: number): User {
 ## Error Handling
 
 Scope: All languages
-Rule: Handle all possible error cases. Ensures graceful recovery and better user experience.
+
+Rule: Handle all possible error cases. Ensures graceful recovery and better
+user experience.
 
 Correct:
+
 ```typescript
 async function fetchUser(id: string): Promise<User | null> {
   try {
@@ -149,9 +171,10 @@ async function fetchUser(id: string): Promise<User | null> {
 ```
 
 Incorrect:
+
 ```typescript
 async function fetchUser(id: string): Promise<User> {
-  const response = await fetch(`/api/users/${id}`);  // unhandled
+  const response = await fetch(`/api/users/${id}`); // unhandled
   return await response.json();
 }
 ```
@@ -161,12 +184,15 @@ async function fetchUser(id: string): Promise<User> {
 ## Error Objects
 
 Scope: All languages
-Rule: Use proper error objects. Include context via properties/cause. Avoid string concatenation in messages.
+
+Rule: Use proper error objects. Include context via
+properties/cause. Avoid string concatenation in messages.
 
 Correct:
+
 ```typescript
 throw new Error("Failed to process payment", {
-  cause: { userId, amount, reason: "Insufficient funds" }
+  cause: { userId, amount, reason: "Insufficient funds" },
 });
 
 try {
@@ -177,9 +203,10 @@ try {
 ```
 
 Incorrect:
+
 ```typescript
 throw new Error("Failed for user " + userId + " amount " + amount);
-throw "Payment failed";  // not an Error object
+throw "Payment failed"; // not an Error object
 ```
 
 ---
@@ -187,9 +214,12 @@ throw "Payment failed";  // not an Error object
 ## Specific Error Types
 
 Scope: All languages
-Rule: Throw specific error types, not generic errors. Provides better context.
+
+Rule: Throw specific error types, not generic errors.
+Provides better context.
 
 Correct:
+
 ```typescript
 class ValidationError extends Error {
   constructor(message: string, public field: string) {
@@ -202,8 +232,9 @@ throw new ValidationError("Invalid email", "email");
 ```
 
 Incorrect:
+
 ```typescript
-throw new Error("Something went wrong");  // too generic
+throw new Error("Something went wrong"); // too generic
 ```
 
 ---
@@ -211,9 +242,12 @@ throw new Error("Something went wrong");  // too generic
 ## Result Objects
 
 Scope: All languages
-Rule: Consider result objects instead of throwing errors. More predictable.
+
+Rule: Consider result objects instead of throwing errors.
+More predictable.
 
 Correct:
+
 ```typescript
 type Result<T, E> = { ok: true; value: T } | { ok: false; error: E };
 
@@ -237,9 +271,11 @@ if (result.ok) {
 ## Ignored Errors
 
 Scope: All languages
+
 Rule: Never ignore returned errors. Handle appropriately.
 
 Correct:
+
 ```typescript
 try {
   await saveToDatabase(data);
@@ -250,6 +286,7 @@ try {
 ```
 
 Incorrect:
+
 ```typescript
 try {
   await saveToDatabase(data);
@@ -263,9 +300,12 @@ try {
 ## Assertions
 
 Scope: All languages
-Rule: Use assertions to verify pre/post-conditions and invariants. Documents assumptions.
+
+Rule: Use assertions to verify pre/post-conditions and
+invariants. Documents assumptions.
 
 Correct:
+
 ```typescript
 function divide(a: number, b: number): number {
   console.assert(b !== 0, "Divisor must not be zero");
@@ -279,9 +319,12 @@ function divide(a: number, b: number): number {
 ## Logging
 
 Scope: All languages
-Rule: Use logging for tracing and debugging. Helps understand program flow.
+
+Rule: Use logging for tracing and debugging. Helps
+understand program flow.
 
 Correct:
+
 ```typescript
 function processOrder(order: Order) {
   console.log("Processing order", { orderId: order.id });
@@ -301,17 +344,24 @@ function processOrder(order: Order) {
 ## Circular Dependencies
 
 Scope: All languages
-Rule: Avoid circular dependencies. Leads to unexpected behavior.
+
+Rule: Avoid circular dependencies. Leads to unexpected
+behavior.
 
 Incorrect:
+
 ```typescript
 // file-a.ts
 import { funcB } from "./file-b.ts";
-export function funcA() { funcB(); }
+export function funcA() {
+  funcB();
+}
 
 // file-b.ts
-import { funcA } from "./file-a.ts";  // circular
-export function funcB() { funcA(); }
+import { funcA } from "./file-a.ts"; // circular
+export function funcB() {
+  funcA();
+}
 ```
 
 ---
@@ -319,19 +369,111 @@ export function funcB() { funcA(); }
 ## Magic Values
 
 Scope: All languages
+
 Rule: Avoid magic numbers or strings. Use named constants.
 
 Correct:
+
 ```typescript
 const MAX_RETRIES = 3;
 const API_TIMEOUT_MS = 5000;
 
-if (retries >= MAX_RETRIES) { }
+if (retries >= MAX_RETRIES) {}
 setTimeout(callback, API_TIMEOUT_MS);
 ```
 
 Incorrect:
+
 ```typescript
-if (retries >= 3) { }  // what is 3?
-setTimeout(callback, 5000);  // what is 5000?
+if (retries >= 3) {} // what is 3?
+setTimeout(callback, 5000); // what is 5000?
+```
+
+---
+
+## Structured Logging
+
+Scope: All logging statements
+
+Rule: Use appropriate log levels by layer and
+include correlation context.
+
+**Layer Guidelines:**
+
+- Repository/data layer: Only `warn`, `debug`, `trace` levels
+- Service/business layer: Log successful operations at `info` level
+- Always include context (trace IDs, user IDs, operation IDs)
+- Log errors with full context before propagating
+
+Correct:
+
+```typescript
+// Service layer - info for successful operations
+logger.info("user created", { userId, traceId, operation: "createUser" });
+
+// Repository layer - debug for data operations
+logger.debug("fetching user from db", { userId, traceId });
+
+// Error with full context
+logger.error("failed to create user", {
+  userId,
+  traceId,
+  error: err.message,
+  stack: err.stack,
+});
+throw err;
+```
+
+Incorrect:
+
+```typescript
+console.log("user created"); // no structure, no context
+logger.info("db query executed"); // wrong level for repository layer
+logger.error("error"); // no context
+```
+
+---
+
+## Error Wrapping
+
+Scope: All error handling
+
+Rule: Wrap errors with context for traceability.
+Define domain-specific error types.
+
+Correct:
+
+```typescript
+class UserNotFoundError extends Error {
+  constructor(public userId: string) {
+    super(`User not found: ${userId}`);
+    this.name = "UserNotFoundError";
+  }
+}
+
+class PaymentError extends Error {
+  constructor(
+    message: string,
+    public transactionId: string,
+    options?: ErrorOptions,
+  ) {
+    super(message, options);
+    this.name = "PaymentError";
+  }
+}
+
+// Wrap with cause for traceability
+try {
+  await processPayment(data);
+} catch (error) {
+  throw new PaymentError("Failed to process payment", txId, { cause: error });
+}
+```
+
+Incorrect:
+
+```typescript
+throw new Error("Something went wrong"); // no context
+throw originalError; // no wrapping, loses context
+throw new Error(originalError.message); // loses stack trace
 ```
